@@ -1,27 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using ToDo.Application.Interfaces;
 using ToDo.Application.ViewModels;
-using ToDo.Domain.Interfaces;
-using ToDo.Domain.Models;
 
 namespace ToDo.Presentation.Web.Controllers
 {
     public class UsuarioController : Controller
     {
-        private readonly IUsuarioRepository _repository;
+        private readonly IUsuarioService _usuarioService;
 
-        public UsuarioController(IUsuarioRepository repository)
+        public UsuarioController(IUsuarioService usuarioService)
         {
-            _repository = repository;
+            _usuarioService = usuarioService;
         }
+
 
         // GET: Usuario
         public async Task<IActionResult> Index()
         {
-            var usuarios = _repository.GetAll();
-            
-            
-            return View(Map(usuarios));
+            return View(await _usuarioService.GetAllAsync());
         }
 
         // GET: Usuario/Details/5
@@ -32,14 +28,14 @@ namespace ToDo.Presentation.Web.Controllers
                 return BadRequest();
             }
 
-            var usuario = _repository.GetById(id.Value);
+            var usuario = await _usuarioService.GetByIdAsync(id.Value);
 
             if (usuario == null)
             {
                 return NotFound();
             }
 
-            return View(Map(usuario));
+            return View(usuario);
         }
 
         // GET: Usuario/Create
@@ -57,9 +53,7 @@ namespace ToDo.Presentation.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var usuarioDB = new Usuario(Guid.NewGuid(), usuario.Name);
-                _repository.Add(usuarioDB);
-                await _repository.SaveChangesAsync();
+                await _usuarioService.AddAsync(usuario);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -74,13 +68,13 @@ namespace ToDo.Presentation.Web.Controllers
                 return BadRequest();
             }
 
-            var usuario = _repository.GetById(id.Value);
+            var usuario = await _usuarioService.GetByIdAsync(id.Value);
 
             if (usuario == null)
             {
                 return NotFound();
             }
-            return View(Map(usuario));
+            return View(usuario);
         }
 
         // POST: Usuario/Edit/5
@@ -88,33 +82,16 @@ namespace ToDo.Presentation.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Name,Id")] UsuarioViewModel usuario)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Name,UserId")] UsuarioViewModel usuario)
         {
-            if (id != usuario.Id)
+            if (id != usuario.UserId)
             {
-                return NotFound();
+                return BadRequest();
             }
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    var usuarioDB = new Usuario(id, usuario.Name);
-
-                    _repository.Update(usuarioDB);
-                    await _repository.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UsuarioExists(usuario.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await _usuarioService.UpdateAsync(usuario);
                 return RedirectToAction(nameof(Index));
             }
             return View(usuario);
@@ -128,55 +105,29 @@ namespace ToDo.Presentation.Web.Controllers
                 return BadRequest();
             }
 
-            var usuario = _repository.GetById(id.Value);
-            if (usuario == null)
-            {
-                return NotFound();
-            }
+            var user = await _usuarioService.GetByIdAsync(id.Value);
 
-            return View(Map(usuario));
+            return View(user);
         }
 
         // POST: Usuario/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id, [Bind("Name,UserId")] UsuarioViewModel usuario)
         {
-            var usuario = _repository.GetById(id);
-
-            if (usuario != null)
+            if (id != usuario.UserId)
             {
-                _repository.Delete(usuario);
-            }
-            
-            await _repository.SaveChangesAsync();
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool UsuarioExists(Guid id)
-        {
-            return _repository.GetById(id) != null;
-        }
-
-        private UsuarioViewModel Map(Usuario usuario)
-        {
-            return new UsuarioViewModel
-            {
-                Name = usuario.Name,
-                Id = usuario.Id
-            };
-        }
-
-        private IQueryable<UsuarioViewModel> Map(IQueryable<Usuario> usuarios)
-        {
-            var response = new List<UsuarioViewModel>();
-            foreach (var item in usuarios)
-            {
-                response.Add(Map(item));
+                return BadRequest();
             }
 
-            return response.AsQueryable();
+            var response = await _usuarioService.DeleteAsync(id);
+            if (response)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Delete), usuario);
         }
+
     }
 }

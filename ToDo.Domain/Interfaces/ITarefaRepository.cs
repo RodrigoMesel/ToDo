@@ -6,6 +6,6 @@ namespace ToDo.Domain.Interfaces
 {
     public interface ITarefaRepository : IRepository<Tarefa>
     {
-        IQueryable<Tarefa> GetByStatus(StatusTarefa statusTarefa);
+        Task<IEnumerable<Tarefa>> GetByStatusAsync(StatusTarefa statusTarefa);
     }
 }

@@ -7,9 +7,8 @@ namespace ToDo.Domain.Core.Interfaces
         void Add(T entity);
         void Update(T entity);
         void Delete(T entity);
-        IQueryable<T> GetAll();
-        T GetById(Guid id);
-
-        Task SaveChangesAsync();
+        Task<IEnumerable<T>> GetAllAsync();
+        Task<T> GetByIdAsync(Guid id);
+        Task<bool> SaveChangesAsync();
     }
 }

@@ -1,12 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ToDo.Domain.Core.Interfaces;
 using ToDo.Domain.Core.Models;
-using ToDo.Domain.Models;
 using ToDo.Infra.Data.Context;
 
 namespace ToDo.Infra.Data.Repository
@@ -32,14 +26,14 @@ namespace ToDo.Infra.Data.Repository
             _dbSet.Remove(entity);
         }
 
-        public IQueryable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return _dbSet;
+            return await _dbSet.ToListAsync();
         }
 
-        public T GetById(Guid id)
+        public async Task<T> GetByIdAsync(Guid id)
         {
-            return _dbSet.FirstOrDefault(u => u.Id == id);
+            return await _dbSet.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public void Update(T entity)
@@ -47,9 +41,16 @@ namespace ToDo.Infra.Data.Repository
             _dbSet.Update(entity);
         }
 
-        public async Task SaveChangesAsync()
+        public async Task<bool> SaveChangesAsync()
         {
-            await _db.SaveChangesAsync();
+            try
+            {
+                await _db.SaveChangesAsync();
+                return true;
+            } catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

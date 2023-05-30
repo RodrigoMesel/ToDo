@@ -5,6 +5,6 @@ namespace ToDo.Domain.Interfaces
 {
     public interface IUsuarioRepository : IRepository<Usuario>
     {
-        
+        Task<Usuario> GetByNameAsync(string name);
     }
 }

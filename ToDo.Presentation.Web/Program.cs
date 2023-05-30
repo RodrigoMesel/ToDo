@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Hosting;
+using System.Reflection;
 using ToDo.CrossCutting.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 
 builder.Services.DependencyInjectionConfig(builder.Configuration);

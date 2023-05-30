@@ -1,4 +1,5 @@
-﻿using ToDo.Domain.Enums;
+﻿using Microsoft.EntityFrameworkCore;
+using ToDo.Domain.Enums;
 using ToDo.Domain.Interfaces;
 using ToDo.Domain.Models;
 using ToDo.Infra.Data.Context;
@@ -11,9 +12,9 @@ namespace ToDo.Infra.Data.Repository
         {
         }
 
-        public IQueryable<Tarefa> GetByStatus(StatusTarefa statusTarefa)
+        public async Task<IEnumerable<Tarefa>> GetByStatusAsync(StatusTarefa statusTarefa)
         {
-           return _dbSet.Where(x => x.StatusTarefa == statusTarefa);    
+           return await _dbSet.Where(x => x.StatusTarefa == statusTarefa).ToListAsync();    
         }
     }
 }
