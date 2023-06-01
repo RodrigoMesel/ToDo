@@ -5,6 +5,7 @@ namespace ToDo.Domain.Models
 {
     public class Tarefa : Entity
     {
+
         public string Descricao { get; private set; }
 
         public Guid IdResponsavel { get; set; }

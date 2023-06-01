@@ -6,6 +6,7 @@ using System.Reflection;
 using ToDo.Application.Interfaces;
 using ToDo.Application.Mapper;
 using ToDo.Application.Services;
+using ToDo.Domain.Commands.TarefaCommands;
 using ToDo.Domain.Commands.UsuarioCommands;
 using ToDo.Domain.Interfaces;
 using ToDo.Infra.Data.Context;
@@ -30,14 +31,20 @@ namespace ToDo.CrossCutting.IoC
 
             //Repositories
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<ITarefaRepository, TarefaRepository>();
 
             //Services
             services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<ITarefaService, TarefaService>();
 
             //CommandHandlers
-            services.AddScoped<IRequestHandler<AddUserCommand, bool>, UsuarioCommandHanler>();
-            services.AddScoped<IRequestHandler<EditUserCommand, bool>, UsuarioCommandHanler>();
-            services.AddScoped<IRequestHandler<DeleteUserCommand, bool>, UsuarioCommandHanler>();
+            services.AddScoped<IRequestHandler<AddUserCommand, bool>, UsuarioCommandHandler>();
+            services.AddScoped<IRequestHandler<EditUserCommand, bool>, UsuarioCommandHandler>();
+            services.AddScoped<IRequestHandler<DeleteUserCommand, bool>, UsuarioCommandHandler>();
+
+            services.AddScoped<IRequestHandler<AddTaskCommand, bool>, TaskCommandHandler>();
+            services.AddScoped<IRequestHandler<EditTaskCommand, bool>, TaskCommandHandler>();
+            services.AddScoped<IRequestHandler<DeleteTaskCommand, bool>, TaskCommandHandler>();
 
         }
     }

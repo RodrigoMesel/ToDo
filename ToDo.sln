@@ -19,13 +19,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.Domain.Core", "ToDo.Do
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.Domain", "ToDo.Domain\ToDo.Domain.csproj", "{C57C6A57-113A-4D95-9ABA-E2E0BD965525}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Infra.Data", "ToDo.Infra.Data\ToDo.Infra.Data.csproj", "{0A672287-1783-4CAC-99CA-1DC0B76286E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.Infra.Data", "ToDo.Infra.Data\ToDo.Infra.Data.csproj", "{0A672287-1783-4CAC-99CA-1DC0B76286E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Presentation.Web", "ToDo.Presentation.Web\ToDo.Presentation.Web.csproj", "{1B0CB2DF-B40D-4199-A441-63A5943BA986}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.Presentation.Web", "ToDo.Presentation.Web\ToDo.Presentation.Web.csproj", "{1B0CB2DF-B40D-4199-A441-63A5943BA986}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.CrossCutting.IoC", "ToDo.CrossCutting.IoC\ToDo.CrossCutting.IoC.csproj", "{20AF5C25-BF2B-4F5F-BD2E-D0DCC7D92FB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.CrossCutting.IoC", "ToDo.CrossCutting.IoC\ToDo.CrossCutting.IoC.csproj", "{20AF5C25-BF2B-4F5F-BD2E-D0DCC7D92FB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDo.Application", "ToDo.Application\ToDo.Application.csproj", "{5A346178-6908-4706-9712-7AAE5E377432}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDo.Application", "ToDo.Application\ToDo.Application.csproj", "{5A346178-6908-4706-9712-7AAE5E377432}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

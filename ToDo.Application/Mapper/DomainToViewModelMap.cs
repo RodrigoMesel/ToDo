@@ -18,6 +18,15 @@ namespace ToDo.Application.Mapper
                 UserId = x.Id,
                 Name = x.Name
             });
+
+            CreateMap<Tarefa, TarefaViewModel>().ConstructUsing(x => new TarefaViewModel
+            {
+                TaskID = x.Id,
+                Description = x.Descricao,
+                ResponsableID = x.IdResponsavel,
+                EstimatedDate = x.DataPrevista,
+                TaskStatus = x.StatusTarefa
+            });
         }
     }
 }

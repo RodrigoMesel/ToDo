@@ -4,7 +4,7 @@ using ToDo.Domain.Models;
 
 namespace ToDo.Domain.Commands.UsuarioCommands
 {
-    public class UsuarioCommandHanler : 
+    public class UsuarioCommandHandler : 
         IRequestHandler<AddUserCommand, bool>,
         IRequestHandler<EditUserCommand, bool>,
         IRequestHandler<DeleteUserCommand, bool>
@@ -12,7 +12,7 @@ namespace ToDo.Domain.Commands.UsuarioCommands
 
         private readonly IUsuarioRepository _usuarioRepository;
 
-        public UsuarioCommandHanler(IUsuarioRepository usuarioRepository)
+        public UsuarioCommandHandler(IUsuarioRepository usuarioRepository)
         {
             _usuarioRepository = usuarioRepository;
         }
