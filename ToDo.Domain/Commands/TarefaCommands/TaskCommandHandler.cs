@@ -30,7 +30,8 @@ namespace ToDo.Domain.Commands.TarefaCommands
                 request.StatusTarefa);
 
             _tarefaRepository.Add(newTask);
-            return await _tarefaRepository.SaveChangesAsync();
+            //return await _tarefaRepository.SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> Handle(DeleteTaskCommand request, CancellationToken cancellationToken)
@@ -43,8 +44,8 @@ namespace ToDo.Domain.Commands.TarefaCommands
             }
 
             _tarefaRepository.Delete(exisistingTask);
-            return await _tarefaRepository.SaveChangesAsync();
-
+            //return await _tarefaRepository.SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> Handle(EditTaskCommand request, CancellationToken cancellationToken)
@@ -63,7 +64,8 @@ namespace ToDo.Domain.Commands.TarefaCommands
                 request.StatusTarefa);
 
             _tarefaRepository.Update(newTask);
-            return await _tarefaRepository.SaveChangesAsync();
+            //return await _tarefaRepository.SaveChangesAsync();
+            return true;
         }
     }
 }

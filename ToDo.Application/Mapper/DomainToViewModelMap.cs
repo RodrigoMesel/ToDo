@@ -25,7 +25,8 @@ namespace ToDo.Application.Mapper
                 Description = x.Descricao,
                 ResponsableID = x.IdResponsavel,
                 EstimatedDate = x.DataPrevista,
-                TaskStatus = x.StatusTarefa
+                TaskStatus = x.StatusTarefa,
+                ResponsableName = x.Responsavel.Name
             });
         }
     }

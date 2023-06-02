@@ -10,14 +10,15 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+
+<table class="table" id="tblTarefas">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ResponsableID)
+                @Html.DisplayNameFor(model => model.ResponsableName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EstimatedDate)
@@ -29,30 +30,39 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ResponsableID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EstimatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaskStatus)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.TaskID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.TaskID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.TaskID">Delete</a> |
-                <a asp-action="GetByStatus" asp-route-id="@item.TaskStatus">Filtrar pelo status</a>
-            </td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ResponsableName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EstimatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskStatus)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.TaskID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.TaskID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.TaskID">Delete</a> |
+                    <a asp-action="GetByStatus" asp-route-status="@item.TaskStatus">Filtrar pelo status</a>
+                </td>
 
-        </tr>
+            </tr>
 
-}
-     
-    </tbody>        
+        }
+
+    </tbody>
 </table>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tblTarefas').DataTable();
+        });
+    </script>
+}

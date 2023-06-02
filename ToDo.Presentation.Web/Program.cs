@@ -1,12 +1,15 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 using System.Reflection;
 using ToDo.CrossCutting.IoC;
-
+using ToDo.Infra.Data.Context;
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<ToDoDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
-builder.Services.DependencyInjectionConfig(builder.Configuration);
+builder.Services.DependencyInjectionConfig();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

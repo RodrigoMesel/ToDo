@@ -1,12 +1,13 @@
-﻿using ToDo.Application.ViewModels;
+﻿using FluentValidation.Results;
+using ToDo.Application.ViewModels;
 
 namespace ToDo.Application.Interfaces
 {
     public interface IUsuarioService
     {
-        Task<bool> AddAsync(UsuarioViewModel usuarioViewModel);
-        Task<bool> UpdateAsync(UsuarioViewModel usuarioViewModel);
-        Task<bool> DeleteAsync(Guid userId);
+        Task<ValidationResult> AddAsync(UsuarioViewModel usuarioViewModel);
+        Task<ValidationResult> UpdateAsync(UsuarioViewModel usuarioViewModel);
+        Task<ValidationResult> DeleteAsync(Guid userId);
         Task<IEnumerable<UsuarioViewModel>> GetAllAsync();
         Task<UsuarioViewModel> GetByIdAsync(Guid id);
     }

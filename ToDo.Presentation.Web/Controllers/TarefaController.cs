@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ToDo.Application.Interfaces;
 using ToDo.Application.ViewModels;
 using ToDo.Domain.Enums;
@@ -8,10 +9,12 @@ namespace ToDo.Presentation.Web.Controllers
     public class TarefaController : Controller
     {
         private readonly ITarefaService _tarefaService;
+        private readonly IUsuarioService _usuarioService;
 
-        public TarefaController(ITarefaService tarefaService)
+        public TarefaController(ITarefaService tarefaService, IUsuarioService usuarioService)
         {
             _tarefaService = tarefaService;
+            _usuarioService = usuarioService;
         }
 
 
@@ -46,8 +49,11 @@ namespace ToDo.Presentation.Web.Controllers
         }
 
         // GET: Tarefa/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var usuarios = await _usuarioService.GetAllAsync();
+            ViewBag.Usuarios = new SelectList(usuarios, "UserId", "Name");
+
             return View();
         }
 

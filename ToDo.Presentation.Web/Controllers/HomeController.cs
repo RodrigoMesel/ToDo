@@ -15,6 +15,7 @@ namespace ToDo.Presentation.Web.Controllers
 
         public IActionResult Index()
         {
+            ViewData["SubTitle"] = "Teste view data";
             return View();
         }
 

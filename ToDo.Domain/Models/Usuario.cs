@@ -6,7 +6,7 @@ namespace ToDo.Domain.Models
     {
         public string Name { get; private set; }
 
-        public virtual IQueryable<Tarefa> Tarefas { get; set; }
+        public virtual IEnumerable<Tarefa> Tarefas { get; set; }
 
         public Usuario(Guid id, string name) : base(id)
         {

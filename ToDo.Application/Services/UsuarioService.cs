@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation.Results;
 using MediatR;
 using ToDo.Application.Interfaces;
 using ToDo.Application.ViewModels;
@@ -20,7 +21,7 @@ namespace ToDo.Application.Services
             _mediator = mediator;
         }
 
-        public async Task<bool> DeleteAsync(Guid userId)
+        public async Task<ValidationResult> DeleteAsync(Guid userId)
         {
             return await _mediator.Send(new DeleteUserCommand(userId));
         }
@@ -35,13 +36,13 @@ namespace ToDo.Application.Services
             return _mapper.Map<UsuarioViewModel>(await _repository.GetByIdAsync(id));
         }
 
-        async Task<bool> IUsuarioService.AddAsync(UsuarioViewModel usuarioViewModel)
+        async Task<ValidationResult> IUsuarioService.AddAsync(UsuarioViewModel usuarioViewModel)
         {
             var addUserCommand = _mapper.Map<AddUserCommand>(usuarioViewModel);
             return await _mediator.Send(addUserCommand);
         }
 
-        async Task<bool> IUsuarioService.UpdateAsync(UsuarioViewModel usuarioViewModel)
+        async Task<ValidationResult> IUsuarioService.UpdateAsync(UsuarioViewModel usuarioViewModel)
         {
             var editUserCommand = _mapper.Map<EditUserCommand>(usuarioViewModel);
             return await _mediator.Send(editUserCommand);

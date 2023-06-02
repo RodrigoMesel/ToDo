@@ -16,5 +16,10 @@ namespace ToDo.Infra.Data.Repository
         {
            return await _dbSet.Where(x => x.StatusTarefa == statusTarefa).ToListAsync();    
         }
+
+        public async Task<IEnumerable<Tarefa>> GetAllAsync()
+        {
+            return await _dbSet.Include(x => x.Responsavel).ToListAsync();
+        }
     }
 }

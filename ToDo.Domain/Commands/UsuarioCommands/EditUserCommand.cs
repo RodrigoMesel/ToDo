@@ -1,4 +1,6 @@
-﻿namespace ToDo.Domain.Commands.UsuarioCommands
+﻿using ToDo.Domain.Commands.UsuarioCommands.Validations;
+
+namespace ToDo.Domain.Commands.UsuarioCommands
 {
     public class EditUserCommand : UsuarioCommand
     {
@@ -6,6 +8,12 @@
         {
             Id = id;    
             Name = name;    
+        }
+
+        public override bool IsValid()
+        {
+            ValidationResult = new EditUserCommandValidation().Validate(this);
+            return ValidationResult.IsValid;
         }
     }
 }

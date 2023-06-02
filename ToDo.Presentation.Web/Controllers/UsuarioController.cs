@@ -4,7 +4,7 @@ using ToDo.Application.ViewModels;
 
 namespace ToDo.Presentation.Web.Controllers
 {
-    public class UsuarioController : Controller
+    public class UsuarioController : BaseController
     {
         private readonly IUsuarioService _usuarioService;
 
@@ -49,13 +49,16 @@ namespace ToDo.Presentation.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name")] UsuarioViewModel usuario)
+        public async Task<IActionResult> Create(UsuarioViewModel usuario)
         {
             if (ModelState.IsValid)
             {
-                await _usuarioService.AddAsync(usuario);
+                var response = await _usuarioService.AddAsync(usuario);
 
-                return RedirectToAction(nameof(Index));
+                if (!ResponseHasErrors(response))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(usuario);
         }
@@ -91,8 +94,11 @@ namespace ToDo.Presentation.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                await _usuarioService.UpdateAsync(usuario);
-                return RedirectToAction(nameof(Index));
+                var response = await _usuarioService.UpdateAsync(usuario);
+                if (!ResponseHasErrors(response))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(usuario);
         }
@@ -121,7 +127,8 @@ namespace ToDo.Presentation.Web.Controllers
             }
 
             var response = await _usuarioService.DeleteAsync(id);
-            if (response)
+
+            if (!ResponseHasErrors(response))
             {
                 return RedirectToAction(nameof(Index));
             }

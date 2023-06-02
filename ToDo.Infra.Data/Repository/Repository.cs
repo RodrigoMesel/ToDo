@@ -7,12 +7,10 @@ namespace ToDo.Infra.Data.Repository
 {
     public class Repository<T> : IRepository<T> where T : Entity
     {
-        private readonly ToDoDbContext _db;
         protected readonly DbSet<T> _dbSet;
 
         public Repository(ToDoDbContext db)
         {
-            _db = db;
             _dbSet = db.Set<T>();
         }
 
@@ -39,18 +37,6 @@ namespace ToDo.Infra.Data.Repository
         public void Update(T entity)
         {
             _dbSet.Update(entity);
-        }
-
-        public async Task<bool> SaveChangesAsync()
-        {
-            try
-            {
-                await _db.SaveChangesAsync();
-                return true;
-            } catch (Exception)
-            {
-                return false;
-            }
         }
     }
 }
